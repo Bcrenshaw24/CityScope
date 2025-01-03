@@ -8,10 +8,10 @@ async function fetchWeather(req) {
     const cityName = req  
     const weatherAPI = process.env.weatherAPI  
     
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Charlotte&appid=${weatherAPI}`) 
-    const data = await response.json()  
-    const desc = data.weather[1]
-    return desc
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${weatherAPI}`) 
+    const data = await response.json() 
+    parsed = data.weather[0].main
+    return parsed
     
 } 
 // gets air quality data from city
@@ -35,12 +35,14 @@ const all = async (req, res) => {
     const cityName = req.query.city  
     try {  
         await mongoose.connect(db)
-        const data = await checkDB(cityName) 
+        const data = await checkDB(cityName)  
+
         if(data) { 
             res.json(data)
         } else {
             const weatherData = await fetchWeather(cityName) 
-            const aqiData = await fetchAir(cityName)
+            console.log(weatherData)
+            const aqiData = await fetchAir(cityName) 
             console.log("retrieved data")
             res.json({city: cityName, weather: weatherData, air: aqiData}) 
             console.log('converted data')
