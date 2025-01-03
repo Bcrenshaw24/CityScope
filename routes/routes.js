@@ -1,11 +1,9 @@
 const express = require('express') 
 const router = express.Router() 
-const {weather, air, water, crime} = require('./apiControllers/apiController')
+const {all} = require('./Controllers/apiController')
 
-router.route('/weather').get(weather)
-router.route('/air').get(air)
-router.route('/water').get(water)
-router.route('/crime').get(crime)
+router.route('/').get(all)
+
 
 
 module.exports = router
