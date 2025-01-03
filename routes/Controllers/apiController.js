@@ -41,7 +41,6 @@ const all = async (req, res) => {
             res.json(data)
         } else {
             const weatherData = await fetchWeather(cityName) 
-            console.log(weatherData)
             const aqiData = await fetchAir(cityName) 
             console.log("retrieved data")
             res.json({city: cityName, weather: weatherData, air: aqiData}) 
