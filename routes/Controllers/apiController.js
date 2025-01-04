@@ -40,8 +40,8 @@ const all = async (req, res) => {
         if(data) { 
             res.json(data)
         } else {
-            const weatherData = await fetchWeather(cityName) 
-            const aqiData = await fetchAir(cityName) 
+            const [weatherData, aqiData] = await Promise.all([fetchWeather(cityName), fetchAir(cityName)])
+
             console.log("retrieved data")
             res.json({city: cityName, weather: weatherData, air: aqiData}) 
             console.log('converted data')
